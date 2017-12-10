@@ -1,0 +1,70 @@
+<div class="tab-content" data-ng-app="myApp" ng-controller="myCtrl">
+  <div id="home" class="tab-pane fade in active">
+     <div class="container-fluid">
+        <div class="col-sm-8 col-sm-offset-2">
+           <h2 class="page-header text-center">Welcome</h2>
+           <p style="text-indent: 1em;" class="text-center">
+              The following data was obtained from www.thegaurdian.com and is considered to be
+              a list of the best films of all time. There are only 25 entries for each genre
+              so every movie has earned its spot. You can see multiple variations of the data,
+              such as which country has had the most Academy Award winning movies as well as
+              seeing an accumulated total of how many movies had multiple leading actors. There
+              is also a page where you can view the entire list and sort the data by any column
+              you choose. Feel free to use our search feature to see if your favorite movie made
+              the list.
+           </p>
+        </div>
+     </div>
+  </div>
+  <div id="menu1" class="tab-pane fade">
+     <h3 class="text-center">Movies Produced By Country</h3>
+     <div class="chart-container" style="position: relative; width:100%">
+        <canvas
+          baseChart
+          [chartType]="'bar'"
+          [datasets]="chartData"
+          [labels]="chartLabels"
+          [options]="chartOptions"
+          [legend]="true"
+          (chartClick)="onChartClick($event)">
+      </canvas>
+     </div>
+  </div>
+  <div id="menu2" class="tab-pane fade">
+     <h3 class="text-center">Entire Seachable Table</h3>
+     <div class="form-group col-sm-8 col-sm-offset-2">
+        <input type="text" class="form-control search" placeholder="Search Any Text Field" (keyup)="findMatches($event.target.value)" />
+     </div>
+     <br/>
+     <div class='table-responsive' style="clear:both;">
+        <table class="table table-striped table-bordered table-condensed" id='myTable'>
+           <tHead>
+              <tr>
+                 <th *ngFor="let header of tableHeaders">
+                    {{header}}<button type='button' class="buttons" name="{{header}}" (click)="setSortValue($event)" data-sorted="false"><span class="glyphicon glyphicon-sort"></span></button>
+                 </th>
+              </tr>
+           </tHead>
+           <tBody>
+              <tr *ngFor="let movie of movieOriginal">
+                 <td *ngFor="let header of tableHeaders">{{tableRepeat(movie,header)}}</td>
+              </tr>
+           </tBody>
+        </table>
+     </div>
+  </div>
+  <div id="menu3" class="tab-pane fade">
+     <h3 class="text-center">Leading Actors Per Movie</h3>
+     <div class="chart-container" style="position: relative; width:100%">
+        <canvas
+        baseChart
+        [chartType]="'pie'"
+        [datasets]="pieChartData"
+        [labels]="pieChartLabels"
+        [options]="chartOptions"
+        [legend]="true"
+        (chartClick)="pieOnChartClick($event)">
+    </canvas>
+     </div>
+  </div>
+</div>
